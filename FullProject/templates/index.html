@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Plant | Home</title>
+    <!--<meta http-equiv="refresh" content="2">-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+          // Functie om gegevens op te halen en bij te werken
+          function updateData() {
+            $.ajax({
+              url: '/get_data',  // Flask-route om gegevens op te halen
+              method: 'GET',
+              success: function(response) {
+                // Bijwerken van de gegevensinhoud op de pagina
+                console.log(response);
+                let datasetid = $("#perc");
+                
+                datasetid.text(response.moisture);
+        
+                $('#percent').text(response.moisture + '%');
+
+              },
+              error: function(xhr, status, error) {
+                console.log('Fout bij het ophalen van gegevens:', error);
+              }
+            });
+          }
+    
+          // Initieel ophalen van gegevens bij het laden van de pagina
+          updateData();
+    
+          // Interval om periodiek gegevens bij te werken (elke 5 seconden in dit voorbeeld)
+          setInterval(updateData, 5000);
+        });
+      </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% if success %}
+    <div class="success-message">Plant added successfully!</div>
+    {% endif %}
+
+    
+    {% block content %}
+        {% include 'components/header.html' %}
+
+        <main>
+            <div class="addplant">
+                <form action="/add-plant">
+                    <button type="submit">voeg plant toe</button>
+                </form>
+            </div>
+            
+            <h2>Jouw planten</h2>
+            <div id="card-container" class="card__container">
+                {% for mijnPlant in mijn_planten %}
+        
+                    <div class="card druppelCard" id="plant{{ mijnPlant.id }}" data-percent="{{ mijnPlant.moisture_value }}"><!-- dataset moet naar procent veranderen dat de sensor aangeeft-->
+                        <div class="info">
+                            <h3>{{ mijnPlant.plant.name }}</h3>
+                            <p><span class="b">locatie:</span> {{ mijnPlant.location}}</p>
+                            <p><span class="b">hoeveelheid water nodig:</span> {{ mijnPlant.plant.watering }}</p>
+                            {% if mijnPlant.automatic_watering %}
+                                <p><span class="b">automatisch wateren: </span>ja</p>
+                            {% else %}
+                                <p><span class="b">automatisch wateren: </span>nee</p>
+                            {% endif %}
+             
+                            <p><span class="b">laatste waterbeurt: </span>{{ mijnPlant.last_watered.strftime('%d/%m/%Y - %H:%M') }}</p>
+                            <p><span class="b">plant aangemaakt op:</span> {{ mijnPlant.created_at.strftime('%d/%m/%Y') }}</p>
+                            
+                            <a href="/plant/{{mijnPlant.id}}">bekijk plant</a>
+                        </div>
+                            <div class="waterLvl">
+                                <p class="waterLvl__value" id="percent">{{ mijnPlant.moisture_value  }}%</p>
+                                <p id="perc" class="hidden"></p>
+                                <div class="drop" > 
+                                    <div class="fill" id="{{mijnPlant.id}}"></div>
+                                </div>   
+                            </div>   
+                            <button type="button" onclick="update_moisture()" class="addPlante">activeren</button>       
+                    </div>
+                {% endfor %}
+     
+                    
+               
+            </div>
+        </main>
+
+        {% include 'components/footer.html' %}
+        <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+    {% endblock %}
+    
+</body>
+
+
+</html>
+

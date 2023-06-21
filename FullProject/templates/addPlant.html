@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Plant | add Plant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>  
+  {% block content %}
+      {% include 'components/header.html' %}
+
+      <main class="fixFooter">
+      {% include 'components/buttons/backButton.html' %}
+      <h2 class="formTitle">vul de gegevens in voor jouw plant</h2>
+      <form id="myForm">
+        <div class="addForm">
+            <div class="form_item">
+              <label for="plant_id">kies plant naam</label><br>
+              <select name="plant_id" id="plant" required>
+                <option value="" selected disabled>Kies een plant</option>
+                {% for plant in plants %}
+                    <option value="{{ plant.id }}">{{ plant.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          
+          <div class="form_item"> 
+            <label for="loc">locatie: </label><br>
+            <input type="text" placeholder="vul hier in waar je de plant zal plaatsen" name="loc" required>
+          </div>
+          {% include 'components/buttons/addPlant.html' %}
+        </div>
+      </form>
+      </main>
+
+      {% include 'components/footer.html' %}
+  {% endblock %}
+</body>
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</html>

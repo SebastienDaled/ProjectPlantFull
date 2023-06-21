@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  {% block content %}
+        {% include 'components/header.html' %}
+        
+      <div class="form">
+        <form id="addPostForm">
+          <label for="title">Titel</label><br>
+          <input type="text" name="title" placeholder="Titel" required><br>
+          <label for="gifs">selecteer een gif</label><br>
+          <!-- maak een slectie systeem voor alle gifs in gif variabele -->
+          <select name="gif_id" id="gifs">
+            {% for gif in gifs %}
+              <option value="{{ gif.id }}">gif {{gif.id}}</option>
+            {% endfor %}
+          </select><br>
+          <label for="content">Inhoud</label><br>
+          <textarea name="content" placeholder="Inhoud" required rows="8" cols="70"></textarea><br>
+          <!-- <input type="file" name="image"><br> -->
+        </form>
+        <button type="button" onclick="savePost()" class="addPlante">Plaats</button>
+      </div>
+      {% include 'components/footer.html' %}
+        <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+    {% endblock %}
+</body>
+</html>

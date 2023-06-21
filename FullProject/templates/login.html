@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Plant | Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="LenR">
+        <div class="image_container">
+            <img src="{{ url_for('static', filename='images/plantBG.png') }}" alt="Flower">
+        </div>
+        <div class="lForm">
+            <div>
+                <h1>Login</h1>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <form method="POST" action="/login">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
+                <input type="submit" value="Login" class="login">
+            </form>
+            <a href="/register">nog geen account?</a>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

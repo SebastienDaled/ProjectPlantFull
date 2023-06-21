@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Plant | Feed</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  {% block content %}
+        {% include 'components/header.html' %}
+
+        <main>
+            
+        
+
+            <div class="posts">
+                <div class="allposts">
+                  {% for post in posts %}
+                    <div class="post">
+                      <h2>{{ post.user.username}}</h2>
+                      {% if post.created_at %}
+                      <p class="small">{{ post.created_at.strftime('%d/%m/%Y %H:%M') }}</p>
+                      {% endif %}
+                      <img src="{{ url_for('static', filename='images/' + post.gif.source) }}" alt="Flower">
+
+                      <h3 class="post_title">{{ post.title }}</h3>
+                      <p class="postText">{{ post.content }}</p>
+
+
+            
+                    </div>
+                {% endfor %}
+                </div>
+                <div class="extra">
+                  <a href="/add-post" class="addPlante">post toevoegen</a>
+                </div>
+            </div>
+            
+        </main>
+
+        {% include 'components/footer.html' %}
+        <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+    {% endblock %}
+</body>
+</html>

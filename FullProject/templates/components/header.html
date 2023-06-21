@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<header>
+  <div>
+    <div class="header_nav">
+      <h1><a href="/">Project Plant</a> </h1>
+      <a href="/feed">community</a>
+    </div>
+    <div class="dropdown">
+        <!-- <input type="checkbox" id="dropdown-toggle"> -->
+        <label for="dropdown-toggle" class="dropdown-label">Hallo, {{ user.username }} ▼</label>
+        <ul class="dropdown-menu">
+        <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+  </div>
+</header>
+{% endblock %}

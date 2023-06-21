@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<footer>
+  <div class="footer-container">
+      <div class="logo">
+          <img src="{{ url_for('static', filename='images/plantBG.png') }}" alt="Logo">
+      </div>
+      <div class="links">
+          <a href="/privacy">Privacy</a>
+          <a href="/gebruiksovereenkomst">Gebruiksovereenkomst</a>
+          <a href="/gemeenschap">Community</a>
+
+      </div>
+      <div class="social-media">
+          <a href="#"><img src="{{ url_for('static', filename='images/facebook.png') }}" alt="Facebook"></a>
+          <a href="#"><img src="{{ url_for('static', filename='images/twitter.png') }}" alt="Twitter"></a>
+          <a href="#"><img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram"></a>
+      </div>
+  </div>
+</footer>
+{% endblock %}
